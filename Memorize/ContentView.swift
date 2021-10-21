@@ -37,7 +37,6 @@ struct Card: View {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 4)
                 Text(content).font(.largeTitle)
-                
             } else {
                 shape.fill()
             }
