@@ -8,21 +8,55 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["😁", "😆", "😅", "😂", "🤣", "🥲", "☺️", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓"]
-    @State var emojiCount = 4
+    @State var emojis = Themes.faces
     
     var body: some View {
         VStack {
             Text("Memorize!").font(.largeTitle).padding(.top)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                    ForEach(emojis[0..<emojis.count], id: \.self) { emoji in
                         Card(content: emoji, color: .blue).aspectRatio(2/3, contentMode: .fit)
                     }
                 }
                 .padding()
             }
+            HStack {
+                ImageTextButton(image: Image(systemName: "face.smiling"), text: "Faces") {
+                    emojis = Themes.faces
+                }
+                Spacer()
+                ImageTextButton(image: Image(systemName: "tortoise"), text: "Animals") {
+                    emojis = Themes.animals
+                }
+                Spacer()
+                ImageTextButton(image: Image(systemName: "gamecontroller"), text: "Games") {
+                    emojis = Themes.games
+                }
+            }
+            .padding(.horizontal)
         }
+    }
+}
+
+struct Themes {
+    static let faces = ["😁", "😆", "😅", "😂", "🤣", "🥲", "☺️", "😊"]
+    static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮"]
+    static let games = ["🎮", "🎯", "🎱", "👾", "🕹", "🎲", "🎳", "♥️", "♠️", "♦️", "♣️"]
+}
+
+struct ImageTextButton: View {
+    var image: Image
+    var text: String
+    var action: () -> Void
+    
+    var body: some View {
+        Button(action: action, label: {
+            VStack {
+                image.font(.largeTitle)
+                Text(text).font(.footnote)
+            }
+        })
     }
 }
 
