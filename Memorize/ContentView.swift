@@ -21,23 +21,7 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            HStack {
-                removeCardButton
-                Spacer()
-                addCardButton
-            }
-            .font(.largeTitle)
-            .padding(.bottom)
-            .padding(.horizontal)
         }
-    }
-    
-    var addCardButton: some View {
-        Button { if emojiCount < emojis.count { emojiCount += 1 } } label: { Image(systemName: "plus.circle") }
-    }
-
-    var removeCardButton: some View {
-        Button { if emojiCount > 0 { emojiCount -= 1 } } label: { Image(systemName: "minus.circle") }
     }
 }
 
