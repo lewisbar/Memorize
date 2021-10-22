@@ -21,7 +21,7 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            HStack {
+            HStack(alignment: .bottom) {
                 ImageTextButton(image: Image(systemName: "face.smiling"), text: "Faces") {
                     emojis = Themes.faces.shuffled()
                 }
@@ -34,7 +34,7 @@ struct ContentView: View {
                     emojis = Themes.games.shuffled()
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal).padding(.bottom)
         }
     }
 }
