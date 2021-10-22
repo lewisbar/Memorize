@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var emojis = Themes.faces
+    @State var emojis = Themes.faces.shuffled()
     
     var body: some View {
         VStack {
@@ -23,15 +23,15 @@ struct ContentView: View {
             }
             HStack {
                 ImageTextButton(image: Image(systemName: "face.smiling"), text: "Faces") {
-                    emojis = Themes.faces
+                    emojis = Themes.faces.shuffled()
                 }
                 Spacer()
                 ImageTextButton(image: Image(systemName: "tortoise"), text: "Animals") {
-                    emojis = Themes.animals
+                    emojis = Themes.animals.shuffled()
                 }
                 Spacer()
                 ImageTextButton(image: Image(systemName: "gamecontroller"), text: "Games") {
-                    emojis = Themes.games
+                    emojis = Themes.games.shuffled()
                 }
             }
             .padding(.horizontal)
