@@ -28,7 +28,7 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            .foregroundColor(.red)
+            .foregroundColor(viewModel.color)
             .padding(.horizontal)
         }
     }
@@ -92,7 +92,7 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = EmojiMemoryGame()
+        let viewModel = EmojiMemoryGame(with: .random)
         ContentView(viewModel: viewModel).preferredColorScheme(.light)
         ContentView(viewModel: viewModel).preferredColorScheme(.dark)
     }
