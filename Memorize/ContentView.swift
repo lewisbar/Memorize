@@ -30,40 +30,10 @@ struct ContentView: View {
             }
             .foregroundColor(.red)
             .padding(.horizontal)
-            
-//            HStack(alignment: .bottom) {
-//                ImageTextButton(image: Image(systemName: "face.smiling"), text: "Faces") {
-//                    emojis = Themes.faces.shuffled()
-//                }
-//                Spacer()
-//                ImageTextButton(image: Image(systemName: "tortoise"), text: "Animals") {
-//                    emojis = Themes.animals.shuffled()
-//                }
-//                Spacer()
-//                ImageTextButton(image: Image(systemName: "gamecontroller"), text: "Games") {
-//                    emojis = Themes.games.shuffled()
-//                }
-//            }
-//            .padding(.horizontal).padding(.bottom)
         }
     }
 }
 
-
-struct ImageTextButton: View {
-    var image: Image
-    var text: String
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: action, label: {
-            VStack {
-                image.font(.largeTitle)
-                Text(text).font(.footnote)
-            }
-        })
-    }
-}
 
 struct CardView: View {
     let card: MemoryGame<String>.Card
@@ -75,6 +45,8 @@ struct CardView: View {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: 4)
                 Text(card.content).font(.largeTitle)
+            } else if card.isMatched {
+                shape.opacity(0)
             } else {
                 shape.fill()
             }
