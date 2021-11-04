@@ -7,7 +7,13 @@
 
 import Foundation
 
-struct Theme {
+struct EmojiTheme {
     let name: String
-    let emoji: [
+    let emojis: [String]
+    let numberOfPairs: Int
+    let color: EmojiTheme.Color
+    
+    enum Color {
+        case red, green, blue, yellow, orange, purple, black
+    }
 }
