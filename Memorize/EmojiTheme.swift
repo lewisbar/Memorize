@@ -14,6 +14,35 @@ struct EmojiTheme {
     let color: EmojiTheme.Color
     
     enum Color {
-        case red, green, blue, yellow, orange, purple, black
+        case red, green, blue, yellow, orange, purple, black, pink, brown
+    }
+    
+    static let faces = EmojiTheme(name: "Faces",
+                                  emojis: ["😁", "😆", "😅", "😂", "🤣", "🥲", "☺️", "😊"],
+                                  numberOfPairs: 6,
+                                  color: .yellow)
+    static let animals = EmojiTheme(name: "Animals",
+                                    emojis: ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮"],
+                                    numberOfPairs: 8,
+                                    color: .brown)
+    static let games = EmojiTheme(name: "Games",
+                                  emojis: ["🎮", "🎯", "🎱", "👾", "🕹", "🎲", "🎳", "♥️", "♠️", "♦️", "♣️"],
+                                  numberOfPairs: 7,
+                                  color: .orange)
+    static let hands = EmojiTheme(name: "Hands",
+                                  emojis: ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "👊", "✊", "🤛", "🤜", "🤞"],
+                                  numberOfPairs: 5,
+                                  color: .yellow)
+    static let professions = EmojiTheme(name: "Professions",
+                                        emojis: ["👮‍♀️", "👷‍♀️", "💂‍♀️", "🕵️", "👩‍⚕️", "👩‍🌾", "👨‍🍳", "👩‍🎓", "👨‍🎤", "👩‍🏫", "👩‍🏭", "🧑‍🎨", "👩‍🚒"],
+                                        numberOfPairs: 8,
+                                        color: .brown)
+    static let flags = EmojiTheme(name: "Flags",
+                                  emojis: ["🏳️", "🏴‍☠️", "🏁", "🇦🇽", "🇩🇿", "🇦🇮", "🇦🇺", "🇧🇪", "🇬🇭", "🇮🇪", "🇸🇪"],
+                                  numberOfPairs: 7,
+                                  color: .orange)
+    
+    static var random: EmojiTheme {
+        [EmojiTheme.faces, EmojiTheme.animals, EmojiTheme.games, EmojiTheme.hands, EmojiTheme.professions, EmojiTheme.flags].shuffled().first!
     }
 }

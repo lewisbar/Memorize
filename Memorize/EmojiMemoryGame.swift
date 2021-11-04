@@ -10,12 +10,13 @@
 import Foundation
 
 class EmojiMemoryGame: ObservableObject {
-    static let emojis = Themes.faces
+    static let theme = EmojiTheme.random
     
     static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairsOfCards: 4) { pairIndex in
-            emojis[pairIndex]
-        }
+        let actualNumberOfPairs = min(theme.emojis.count, theme.numberOfPairs)
+        let shuffledEmojis = theme.emojis.shuffled()
+
+        return MemoryGame<String>(numberOfPairsOfCards: actualNumberOfPairs) { shuffledEmojis[$0] }
     }
     
     @Published private var model: MemoryGame<String> = createMemoryGame()
@@ -24,11 +25,6 @@ class EmojiMemoryGame: ObservableObject {
         model.cards
     }
     
-    struct Themes {
-        static let faces = ["😁", "😆", "😅", "😂", "🤣", "🥲", "☺️", "😊"]
-        static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮"]
-        static let games = ["🎮", "🎯", "🎱", "👾", "🕹", "🎲", "🎳", "♥️", "♠️", "♦️", "♣️"]
-    }
     
     // MARK: - Intents
     func choose(_ card: MemoryGame<String>.Card) {
