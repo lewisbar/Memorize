@@ -4,6 +4,7 @@
 //
 //  Created by Lennart Wisbar on 04.11.21.
 //
+//  This belongs to the MODEL part of MVVM.
 
 import Foundation
 
