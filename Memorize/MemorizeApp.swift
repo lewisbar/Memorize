@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct MemorizeApp: App {
-    let game = EmojiMemoryGame()
+    let game = EmojiMemoryGame(with: .random)
     
     var body: some Scene {
         WindowGroup {

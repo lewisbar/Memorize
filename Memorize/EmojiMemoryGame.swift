@@ -7,31 +7,59 @@
 
 //  This is the VIEW MODEL part of MVVM.
 
-import Foundation
+// import Foundation
+import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    static let emojis = Themes.faces
-    
-    static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairsOfCards: 4) { pairIndex in
-            emojis[pairIndex]
-        }
+
+    private static func createMemoryGame(with theme: EmojiTheme) -> MemoryGame<String> {
+        let actualNumberOfPairs = min(theme.emojis.count, theme.numberOfPairs)
+        let shuffledEmojis = theme.emojis.shuffled()
+        return MemoryGame<String>(numberOfPairsOfCards: actualNumberOfPairs) { shuffledEmojis[$0] }
     }
     
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    init(with theme: EmojiTheme) {
+        self.theme = theme
+        self.model = Self.createMemoryGame(with: theme)
+    }
+    
+    @Published private var model: MemoryGame<String>
+    @Published private var theme: EmojiTheme
     
     var cards: Array<MemoryGame<String>.Card> {
         model.cards
     }
     
-    struct Themes {
-        static let faces = ["😁", "😆", "😅", "😂", "🤣", "🥲", "☺️", "😊"]
-        static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮"]
-        static let games = ["🎮", "🎯", "🎱", "👾", "🕹", "🎲", "🎳", "♥️", "♠️", "♦️", "♣️"]
+    var themeColor: Color {
+        switch theme.color {
+        case .red: return .red
+        case .green: return .green
+        case .blue: return .blue
+        case .orange: return .orange
+        case .yellow: return .yellow
+        case .black: return .black
+        case .purple: return .purple
+        case .pink: return .pink
+        case .brown: return .brown
+        }
     }
+    
+    var themeName: String {
+        theme.name
+    }
+    
+    var score: Int {
+        model.score
+    }
+    
     
     // MARK: - Intents
     func choose(_ card: MemoryGame<String>.Card) {
         model.choose(card)
+    }
+    
+    func startNewGame() {
+        theme = .random
+        model = EmojiMemoryGame.createMemoryGame(with: theme)
     }
 }
