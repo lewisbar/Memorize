@@ -32,15 +32,15 @@ struct EmojiTheme {
     static let hands = EmojiTheme(name: "Hands",
                                   emojis: ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "👊", "✊", "🤛", "🤜", "🤞"],
                                   numberOfPairs: 5,
-                                  color: .yellow)
+                                  color: .pink)
     static let professions = EmojiTheme(name: "Professions",
                                         emojis: ["👮‍♀️", "👷‍♀️", "💂‍♀️", "🕵️", "👩‍⚕️", "👩‍🌾", "👨‍🍳", "👩‍🎓", "👨‍🎤", "👩‍🏫", "👩‍🏭", "🧑‍🎨", "👩‍🚒"],
                                         numberOfPairs: 8,
-                                        color: .brown)
+                                        color: .black)
     static let flags = EmojiTheme(name: "Flags",
                                   emojis: ["🏳️", "🏴‍☠️", "🏁", "🇦🇽", "🇩🇿", "🇦🇮", "🇦🇺", "🇧🇪", "🇬🇭", "🇮🇪", "🇸🇪"],
                                   numberOfPairs: 7,
-                                  color: .orange)
+                                  color: .green)
     
     static var random: EmojiTheme {
         [EmojiTheme.faces, EmojiTheme.animals, EmojiTheme.games, EmojiTheme.hands, EmojiTheme.professions, EmojiTheme.flags].randomElement()!
