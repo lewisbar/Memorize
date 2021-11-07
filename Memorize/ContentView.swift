@@ -25,7 +25,7 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(viewModel.cards) { card in
-                        CardView(card: card, color: viewModel.color)
+                        CardView(card: card, color: viewModel.themeColor)
                             .aspectRatio(2/3, contentMode: .fit)
                             .onTapGesture {
                                 viewModel.choose(card)
@@ -35,6 +35,12 @@ struct ContentView: View {
                 .padding()
             }
             .padding(.horizontal)
+            HStack {
+                Text("Theme: \(viewModel.themeName)")
+                Spacer()
+                Text("Score")
+            }
+            .padding()
         }
     }
 }
