@@ -11,20 +11,29 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private (set) var cards: Array<Card>
+    private (set) var score = 0
     private var indexOfTheOnlyFaceUpCard: Int?
     
     mutating func choose(_ card: Card) {
-        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),  // Chosen card is clickable (i.e. face down and not already matched)
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched {
             
-            if let potentialMatchIndex = indexOfTheOnlyFaceUpCard {
-                if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+            if let potentialMatchIndex = indexOfTheOnlyFaceUpCard {  // There is already another card which is face up
+                if cards[chosenIndex].content == cards[potentialMatchIndex].content {  // Match
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    score += 2
+                } else {  // Mismatch
+                    if cards[chosenIndex].hasBeenSeen {
+                        score -= 1
+                    }
+                    if cards[potentialMatchIndex].hasBeenSeen {
+                        score -= 1
+                    }
                 }
                 indexOfTheOnlyFaceUpCard = nil
-            } else {
+            } else {  // The chosen card is currently the only card that is face up
                 for index in cards.indices {
                     if cards[index].isFaceUp {
                         cards[index].hasBeenSeen = true
@@ -33,7 +42,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 }
                 indexOfTheOnlyFaceUpCard = chosenIndex
             }
-            
             cards[chosenIndex].isFaceUp.toggle()
         }
         print("\(cards)")

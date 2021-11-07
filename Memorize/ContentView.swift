@@ -38,7 +38,7 @@ struct ContentView: View {
             HStack {
                 Text("Theme: \(viewModel.themeName)")
                 Spacer()
-                Text("Score")
+                Text("Score: \(viewModel.score)")
             }
             .padding()
         }
