@@ -43,6 +43,6 @@ struct EmojiTheme {
                                   color: .orange)
     
     static var random: EmojiTheme {
-        [EmojiTheme.faces, EmojiTheme.animals, EmojiTheme.games, EmojiTheme.hands, EmojiTheme.professions, EmojiTheme.flags].shuffled().first!
+        [EmojiTheme.faces, EmojiTheme.animals, EmojiTheme.games, EmojiTheme.hands, EmojiTheme.professions, EmojiTheme.flags].randomElement()!
     }
 }
