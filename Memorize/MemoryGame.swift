@@ -14,37 +14,44 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     private (set) var score = 0
     private var indexOfTheOnlyFaceUpCard: Int?
     
-    mutating func choose(_ card: Card) {
-        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),  // Chosen card is clickable (i.e. face down and not already matched)
-           !cards[chosenIndex].isFaceUp,
-           !cards[chosenIndex].isMatched {
-            
-            if let potentialMatchIndex = indexOfTheOnlyFaceUpCard {  // There is already another card which is face up
-                if cards[chosenIndex].content == cards[potentialMatchIndex].content {  // Match
-                    cards[chosenIndex].isMatched = true
-                    cards[potentialMatchIndex].isMatched = true
-                    score += 2
-                } else {  // Mismatch
-                    if cards[chosenIndex].hasBeenSeen {
-                        score -= 1
-                    }
-                    if cards[potentialMatchIndex].hasBeenSeen {
-                        score -= 1
-                    }
-                }
-                indexOfTheOnlyFaceUpCard = nil
-            } else {  // The chosen card is currently the only card that is face up
-                for index in cards.indices {
-                    if cards[index].isFaceUp {
-                        cards[index].hasBeenSeen = true
-                    }
-                    cards[index].isFaceUp = false
-                }
-                indexOfTheOnlyFaceUpCard = chosenIndex
+    private enum Scenario {
+        case doesNotExist
+        case notClickable
+        case onlyOneCardIsFaceUpNow(chosenIndex: Int)
+        case match(chosenIndex: Int, matchIndex: Int)
+        case mismatch(chosenIndex: Int, misMatchIndex: Int)
+    }
+    
+    private func scenario(for chosenCard: Card) -> Scenario {
+        guard let chosenIndex = cards.firstIndex(where: { $0.id == chosenCard.id }) else { return .doesNotExist }
+        if cards[chosenIndex].isFaceUp || cards[chosenIndex].isMatched { return .notClickable }
+        guard let potentialMatchIndex = indexOfTheOnlyFaceUpCard else { return .onlyOneCardIsFaceUpNow(chosenIndex: chosenIndex) }
+        if cards[chosenIndex].content == cards[potentialMatchIndex].content { return .match(chosenIndex: chosenIndex, matchIndex: potentialMatchIndex) }
+        else { return .mismatch(chosenIndex: chosenIndex, misMatchIndex: potentialMatchIndex) }
+    }
+    
+    mutating func choose(_ chosenCard: Card) {
+        switch scenario(for: chosenCard) {
+        case .doesNotExist, .notClickable: return
+        case .onlyOneCardIsFaceUpNow(let chosenIndex):
+            for index in cards.indices where cards[index].isFaceUp {
+                cards[index].hasBeenSeen = true
+                cards[index].isFaceUp = false
             }
-            cards[chosenIndex].isFaceUp.toggle()
+            cards[chosenIndex].isFaceUp = true
+            indexOfTheOnlyFaceUpCard = chosenIndex
+        case .match(let chosenIndex, let matchIndex):
+            cards[chosenIndex].isMatched = true
+            cards[matchIndex].isMatched = true
+            score += 2
+            cards[chosenIndex].isFaceUp = true
+            indexOfTheOnlyFaceUpCard = nil
+        case .mismatch(let chosenIndex, let misMatchIndex):
+            if cards[chosenIndex].hasBeenSeen { score -= 1 }
+            if cards[misMatchIndex].hasBeenSeen { score -= 1 }
+            cards[chosenIndex].isFaceUp = true
+            indexOfTheOnlyFaceUpCard = nil
         }
-        print("\(cards)")
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
