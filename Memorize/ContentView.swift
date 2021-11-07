@@ -46,7 +46,7 @@ struct ContentView: View {
 }
 
 
-struct CardView: View {
+private struct CardView: View {
     let card: MemoryGame<String>.Card
     let color: Color
     
