@@ -22,6 +22,7 @@ struct ContentView: View {
                 })
             }
             .padding(.horizontal)
+            .padding(.top, 8)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(viewModel.cards) { card in
@@ -39,10 +40,9 @@ struct ContentView: View {
                 Spacer()
                 Text("Score: \(viewModel.score)")
             }
-            .padding()
+            .padding(.bottom)
+            .padding(.horizontal)
         }
-        .foregroundColor(.red)
-        .padding(.horizontal)
     }
 }
 
